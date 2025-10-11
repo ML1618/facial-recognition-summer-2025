@@ -11,25 +11,25 @@ import numpy as np
 from matplotlib import pyplot as plt
 import keras
 
-images = tf.data.Dataset.list_files('data\\images\\*.jpg', shuffle=False)
-# print(images.as_numpy_iterator().next()) # Test images appear - they do
-
 def load_image(image_path):
     byte_img = tf.io.read_file(image_path)
     img = tf.io.decode_jpeg(byte_img)
     return img
 
-images = images.map(load_image)
+if __name__ == '__main__':
+    images = tf.data.Dataset.list_files('data\\images\\*.jpg', shuffle=False)
+    # print(images.as_numpy_iterator().next()) # Test images appear - they do
+    images = images.map(load_image)
 
-# Print RGB channels
-for img in images:
-    print(img.numpy())
+    # Print RGB channels
+    for img in images:
+        print(img.numpy())
 
-image_generator = images.batch(4).as_numpy_iterator()
-plot_images = image_generator.next()
+    image_generator = images.batch(4).as_numpy_iterator()
+    plot_images = image_generator.next()
 
-# Show batches of 4 random images
-fix, ax = plt.subplots(1, 4, figsize=(20, 20))
-for idx, image in enumerate(plot_images):
-    ax[idx].imshow(image)
-plt.show()
+    # Show batches of 4 random images
+    fix, ax = plt.subplots(1, 4, figsize=(20, 20))
+    for idx, image in enumerate(plot_images):
+        ax[idx].imshow(image)
+    plt.show()
