@@ -3,6 +3,8 @@ os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 import tensorflow as tf
 from show_images import load_image
+import json
+import numpy as np
 
 # Shuffle false because labels will be loaded in same format so have to be in same structure
 train_images = tf.data.Dataset.list_files('aug_data\\train\\images\\*.jpg', shuffle=False)
@@ -21,3 +23,9 @@ val_images = val_images.map(lambda x: tf.image.resize(x, (120, 120)))
 val_images = val_images.map(lambda x: x / 255.0)
 
 print(train_images.as_numpy_iterator().next())
+
+def load_labels(label_path):
+    with open(label_path.numpy(), 'r', encoding='utf-8') as f:
+        label = json.load(f)
+
+    return [label['class']], label['bbox']
