@@ -22,10 +22,40 @@ val_images = val_images.map(load_image)
 val_images = val_images.map(lambda x: tf.image.resize(x, (120, 120)))
 val_images = val_images.map(lambda x: x / 255.0)
 
-print(train_images.as_numpy_iterator().next())
+# print(train_images.as_numpy_iterator().next())
 
 def load_labels(label_path):
     with open(label_path.numpy(), 'r', encoding='utf-8') as f:
         label = json.load(f)
 
     return [label['class']], label['bbox']
+
+train_labels = tf.data.Dataset.list_files('aug_data\\train\\labels\\*.json', shuffle=False)
+train_labels = train_labels.map(lambda x: tf.py_function(load_labels, [x], [tf.uint8, tf.float16]))
+
+test_labels = tf.data.Dataset.list_files('aug_data\\test\\labels\\*.json', shuffle=False)
+test_labels = test_labels.map(lambda x: tf.py_function(load_labels, [x], [tf.uint8, tf.float16]))
+
+val_labels = tf.data.Dataset.list_files('aug_data\\val\\labels\\*.json', shuffle=False)
+val_labels = val_labels.map(lambda x: tf.py_function(load_labels, [x], [tf.uint8, tf.float16]))
+
+print(train_labels.as_numpy_iterator().next())
+
+print(len(train_images), len(train_labels), len(test_images), len(test_labels), len(val_images), len(val_labels))
+
+train = tf.data.Dataset.zip((train_images, train_labels))
+train = train.shuffle(5000)
+train = train.batch(8)
+train = train.prefetch(4)
+
+test = tf.data.Dataset.zip((test_images, test_labels))
+test = test.shuffle(1300)
+test = test.batch(8)
+test = test.prefetch(4)
+
+val = tf.data.Dataset.zip((val_images, val_labels))
+val = val.shuffle(1000)
+val = val.batch(8)
+val = val.prefetch(4)
+
+print(train.as_numpy_iterator().next()[1])
