@@ -1,6 +1,6 @@
 # 2025 Summer Programming Project - Facial Recognition
 
-This is a facial recognition software designed to draw a bounding box around visible faces it sees, coded in Python 3.12.10 (due to TensorFlow requiring Python 3.9-3.12). Following along with this [YouTube video](https://www.youtube.com/watch?v=N_W4EYtsa10) (currently at 1:13:33).
+This is a facial recognition software designed to draw a bounding box around visible faces it sees, coded in Python 3.12.10 (due to TensorFlow requiring Python 3.9-3.12). Following along with this [YouTube video](https://www.youtube.com/watch?v=N_W4EYtsa10) (currently at 1:23:03).
 
 ## Dependencies Used
 
@@ -40,3 +40,4 @@ This is a facial recognition software designed to draw a bounding box around vis
    - Used Tensorflow (v2.19.0) CPU for Windows 11 instead
  - > oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
    - `os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'` and `os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'` at top of files
+ - When showing the augmented images in text in `augmented_images_to_tensorflow.py`, all the values are 0
