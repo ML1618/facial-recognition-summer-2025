@@ -28,7 +28,7 @@ This is a facial recognition software designed to draw a bounding box around vis
  - Advantages of using a virtual environment (venv/virtualenv)
    - Allows me to install packages within the environment, without modifying the global installation
    - Allows for multiple different codebases with incompatible libraries without them interfering with each other 
- - 
+ - How to work with large amounts of data
 
 ## Roadblocks
 
@@ -39,5 +39,5 @@ This is a facial recognition software designed to draw a bounding box around vis
  - Couldn't find the right mix of drivers, cuDNN, CUDA, and TensorFlow-GPU packages
    - Used Tensorflow (v2.19.0) CPU for Windows 11 instead
  - > oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
-   - `os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'` and `os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'` at top of files
+   - Add `os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'` and `os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'` at top of files to fix rounding errors and suppress low-level warnings
  - When showing the augmented images in text in `augmented_images_to_tensorflow.py`, all the values are 0
